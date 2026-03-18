@@ -1,0 +1,279 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>简易论坛 - 书法专题</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap");
+
+    :root {
+      --bg-a: #0a1933;
+      --bg-b: #0a5d6f;
+      --bg-c: #15906e;
+      --card: rgba(8, 20, 46, 0.62);
+      --card-border: rgba(255, 255, 255, 0.22);
+      --text-main: #f5fbff;
+      --text-sub: #bfdcf7;
+      --accent: #8bf7d7;
+      --accent-2: #7bc6ff;
+      --danger: #ffb1b8;
+      --ok: #9effcc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      background: linear-gradient(125deg, var(--bg-a), var(--bg-b), var(--bg-c));
+      background-size: 180% 180%;
+      animation: bgMove 15s ease infinite;
+    }
+
+    .shell {
+      width: min(1000px, 94vw);
+      margin: 26px auto 40px;
+    }
+
+    .topbar,
+    .card {
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow: 0 12px 38px rgba(3, 7, 20, 0.42);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      margin: 0;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      letter-spacing: 0.02em;
+      font-size: 22px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #e3f5ff;
+      font-size: 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-weight: 700;
+      color: #052838;
+      background: linear-gradient(120deg, #9efbdf, #79c8ff);
+    }
+
+    .card {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-sub);
+      font-size: 14px;
+    }
+
+    .field { margin-top: 12px; }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text-main);
+      padding: 11px 12px;
+      outline: none;
+      font-size: 14px;
+      transition: 0.2s ease;
+      font-family: inherit;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: #b4d1ee; }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(123, 198, 255, 0.2);
+    }
+
+    textarea { min-height: 98px; resize: vertical; }
+
+    .action {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .post {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+      background: rgba(6, 18, 42, 0.55);
+    }
+
+    .post-title {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .meta {
+      margin: 7px 0 11px;
+      color: var(--text-sub);
+      font-size: 12px;
+    }
+
+    .post-content {
+      margin: 0 0 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .divider {
+      height: 1px;
+      border: none;
+      background: rgba(255, 255, 255, 0.16);
+      margin: 12px 0;
+    }
+
+    .comment {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .comment-main {
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+
+    .replies {
+      margin-top: 8px;
+      padding-left: 12px;
+      border-left: 2px solid rgba(139, 247, 215, 0.45);
+    }
+
+    .reply-item {
+      font-size: 13px;
+      margin: 6px 0;
+      color: #dff4ff;
+    }
+
+    .inline-form {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .inline-form input { flex: 1; }
+
+    .tiny-btn {
+      border: none;
+      border-radius: 9px;
+      padding: 8px 11px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0d2a38;
+      background: linear-gradient(120deg, #b5ffea, #8ecbff);
+    }
+
+    .msg {
+      min-height: 22px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--danger);
+    }
+
+    .muted {
+      color: var(--text-sub);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: 94vw; }
+      .topbar { padding: 14px; }
+      .card { padding: 14px; }
+      .brand { font-size: 20px; }
+      .inline-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <h1 class="brand">墨韵论坛</h1>
+      <div class="badge">
+        当前用户：<strong id="currentUser">-</strong>
+      </div>
+      <button id="logoutBtn" class="btn" type="button">退出登录</button>
+    </header>
+
+    <section class="card">
+      <h2>专题：书法交流</h2>
+      <p>分享你的临帖心得、工具推荐和学习心得。每个帖子都支持评论和回复。</p>
+    </section>
+
+    <section class="card">
+      <h2>发布新帖</h2>
+      <div class="field">
+        <input id="postTitle" type="text" placeholder="帖子标题，例如：如何练好楷书结构？" />
+      </div>
+      <div class="field">
+        <textarea id="postContent" placeholder="写下你的内容..."></textarea>
+      </div>
+      <div class="action">
+        <button id="publishPost" class="btn" type="button">发布帖子</button>
+      </div>
+      <div id="postMsg" class="msg"></div>
+    </section>
+
+    <section class="card">
+      <h2>帖子列表</h2>
+      <div id="postList"></div>
+      <p class="muted">提示：数据保存在浏览器本地存储（localStorage）。</p>
+    </section>
+  </div>
+
+  <script src="./forum.js"></script>
+</body>
+</html>
